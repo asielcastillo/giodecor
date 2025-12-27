@@ -1,0 +1,566 @@
+/* style.css */
+
+/* ATUALIZADO: Import Google Fonts - Playfair Display para títulos, Lora para subtítulos, Open Sans para o corpo */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Reset Básico & Box Sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth; /* Rolagem suave para âncoras */
+}
+
+/* --- VARIÁVEIS CSS (PALETA ORIGINAL: BEGE, MARROM, BRONZE) --- */
+/* Estas são as cores padrão, caso nenhuma classe de tema seja aplicada ao body ou para temas antigos */
+:root {
+    --page-overlay-color: rgba(76, 68, 60, 0.7); 
+    --header-text-color: #F2E3BC; 
+    --card-bg-color: #F2E3BC; 
+    --card-border-color: #E0D3B0; 
+    --main-text-color: #4C443C; 
+    --button-bg-color: #B57E42; 
+    --button-text-color: #F2E3BC; 
+    --button-hover-bg-color: #A36D3E; 
+    --social-icon-color: #B57E42; 
+    --social-text-color: #4C443C; 
+    --social-hover-color: #B57E42; 
+}
+
+/* --- PALETA 1: CINZA E PRETO (THEME-GRAY-BLACK) - Mantida, mas não utilizada no body padrão agora --- */
+body.theme-gray-black {
+    --page-overlay-color: rgba(0, 0, 0, 0.6); /* Preto com transparência */
+    --header-text-color: #F8F8F8; /* Quase branco para o cabeçalho */
+    --card-bg-color: rgba(30, 30, 30, 0.9); /* Cinza escuro translúcido para o cartão */
+    --card-border-color: #555555; /* Cinza médio escuro para divisores */
+    --main-text-color: #E0E0E0; /* Cinza claro para texto geral */
+    --button-bg-color: #6C757D; /* Cinza azulado elegante para botões */
+    --button-text-color: #FFFFFF; /* Branco para texto dos botões */
+    --button-hover-bg-color: #8D99A0; /* Cinza azulado mais claro para hover */
+    --social-icon-color: #9AA3AB; /* Cinza suave para ícone social */
+    --social-text-color: #E0E0E0; /* Cinza claro para texto social */
+    --social-hover-color: #FFFFFF; /* Branco para hover social */
+}
+
+/* --- NOVO TEMA PRINCIPAL: MODERN VIVID (Terracota/Coral) --- */
+body.theme-modern-vivid {
+    --page-overlay-color: rgba(20, 20, 20, 0.60); /* Fundo bem escuro para o destaque */
+    --header-text-color: #FFFFFF; /* Branco puro para cabeçalhos */
+    --card-bg-color: rgba(30, 30, 30, 0.9); /* Card ligeiramente transparente no escuro */
+    --card-border-color: #505050; /* Cinza médio para divisores */
+    --main-text-color: #E0E0E0; /* Cinza claro para texto geral */
+    --button-bg-color: #E76F51; /* Terracota/Coral vibrante para botões */
+    --button-text-color: #FFFFFF; /* Branco para texto dos botões */
+    --button-hover-bg-color: #F4A261; /* Laranja mais suave para hover */
+    --social-icon-color: #E76F51; /* Terracota/Coral para ícone social */
+    --social-text-color: #E0E0E0; /* Cinza claro para texto social */
+    --social-hover-color: #F4A261; /* Laranja mais suave para hover social */
+}
+
+/* --- PALETA 2: BRANCO E PRETO (THEME-WHITE-BLACK) - Mantida, mas não utilizada no body padrão agora --- */
+body.theme-white-black {
+    --page-overlay-color: rgba(255, 255, 255, 0.5); 
+    --header-text-color: #333333; 
+    --card-bg-color: #FFFFFF; 
+    --card-border-color: #E0E0E0; 
+    --main-text-color: #444444; 
+    --button-bg-color: #000000; 
+    --button-text-color: #FFFFFF; 
+    --button-hover-bg-color: #333333; 
+    --social-icon-color: #000000; 
+    --social-text-color: #444444; 
+    --social-hover-color: #000000; 
+}
+
+
+/* --- ESTILOS GERAIS DA PÁGINA (APLICAM AS VARIÁVEIS) --- */
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; /* Fonte padrão para o corpo */
+    color: var(--main-text-color); 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto; /* Permite rolagem vertical */
+    -webkit-overflow-scrolling: touch; /* Melhoria de rolagem para iOS */
+    position: relative;
+}
+
+/* Pseudo-elemento para o overlay de cor sobre as imagens de fundo */
+body::after { 
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--page-overlay-color); /* Usa a variável de cor do overlay do tema ativo */
+    z-index: -1; /* Fica acima da imagem desfocada, mas abaixo do conteúdo principal */
+    transition: background-color 0.5s ease; /* Transição suave para mudança de tema */
+}
+
+/* NOVO: Estilos para o contêiner do slideshow de fundo */
+#background-slideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Garante que as imagens não transbordem */
+    z-index: -2; /* Fica abaixo do overlay e do conteúdo principal */
+}
+
+/* NOVO: Estilos para as imagens dentro do slideshow */
+#background-slideshow img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem cubra toda a área sem distorção */
+    opacity: 0; /* Todas as imagens começam invisíveis */
+    transition: opacity 1.5s ease-in-out; /* Efeito de transição de fade */
+    filter: blur(3px); /* Desfoque aplicado diretamente às imagens */
+}
+
+/* NOVO: Classe para a imagem ativa no slideshow */
+#background-slideshow img.active {
+    opacity: 1; /* A imagem ativa fica visível */
+}
+
+/* Container principal para o cabeçalho e o cartão de conteúdo */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+    width: 100%;
+    max-width: 500px; /* Largura máxima padrão para o conteúdo central (e para index.html) */
+    z-index: 1; /* Garante que o conteúdo fique acima do background e do overlay */
+}
+
+/* Seção do Cabeçalho */
+.site-header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--header-text-color); /* Usa a variável de cor do cabeçalho do tema ativo */
+    transition: color 0.5s ease; /* Transição suave para mudança de tema */
+}
+
+/* Estilos para a imagem de perfil circular */
+.site-header .profile-image {
+    width: 150px; /* Tamanho da imagem de perfil */
+    height: 150px;
+    border-radius: 50%; /* Torna a imagem circular */
+    object-fit: cover; /* Garante que a imagem preencha o círculo sem distorção */
+    margin: 0 auto 20px auto; /* Centraliza e adiciona margem inferior */
+    display: block;
+    border: 4px solid var(--button-bg-color); /* Borda para destaque, usa cor do botão do tema ativo */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+}
+
+/* ATUALIZADO: Estilos para o nome da cliente (h1) com destaque */
+.site-header .client-name {
+    font-family: 'Playfair Display', serif; /* Nova fonte sofisticada */
+    font-size: 2.5rem; /* Aumentado um pouco */
+    font-weight: 700;
+    margin: 0 auto 10px auto; /* Centraliza e ajusta margem */
+    line-height: 1.2;
+    position: relative; /* Para o pseudo-elemento */
+    display: inline-block; /* Para o pseudo-elemento se ajustar ao texto */
+    padding-bottom: 8px; /* Espaço para o sublinhado */
+    letter-spacing: 0.08em; /* Leve espaçamento para um ar mais elegante */
+}
+.site-header .client-name::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px; /* Comprimento do sublinhado */
+    height: 3px; /* Espessura do sublinhado */
+    background-color: var(--button-bg-color); /* Usa a cor vibrante do botão */
+    border-radius: 2px; /* Cantos levemente arredondados */
+}
+
+
+/* ATUALIZADO: Estilos para o slogan (tagline) */
+.site-header .tagline {
+    font-family: 'Lora', serif; /* Nova fonte elegante */
+    font-size: 1.2rem; /* Aumentado um pouco */
+    letter-spacing: 0.05em; /* Reduzido o espaçamento para melhor leitura com a nova fonte */
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-transform: none; /* Removido uppercase para um visual mais suave */
+    font-weight: 600;
+}
+
+/* Estilos para a descrição da cliente */
+.site-header .description-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 30px 0;
+    padding: 0 10px;
+    color: var(--header-text-color); /* Usa a cor do cabeçalho para contraste */
+}
+
+
+/* Cartão de Conteúdo Principal */
+.content-card {
+    background-color: var(--card-bg-color); /* Usa a variável de cor do card do tema ativo */
+    border-radius: 20px;
+    padding: 30px 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Transição suave para mudança de tema */
+}
+
+/* ATUALIZADO: Botões de Ação - Designer mais moderno e vibrante */
+.action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--button-bg-color); /* Usa a cor do botão do tema ativo */
+    color: var(--button-text-color); /* Usa a cor do texto do botão do tema ativo */
+    text-decoration: none;
+    padding: 18px 25px; /* Aumentado o padding para um botão mais "robusto" */
+    border-radius: 12px; /* Borda mais suave e moderna */
+    margin-bottom: 18px; /* Aumentado a margem */
+    font-size: 1.15rem; /* Levemente maior */
+    font-weight: 700; /* Mais negrito */
+    letter-spacing: 0.05em; /* Pequeno espaçamento entre letras */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Adicionado transform na transição */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+    border: none; /* Garante que não haverá bordas padrão */
+}
+
+.action-button:last-of-type {
+    margin-bottom: 0;
+}
+
+.action-button:hover {
+    background-color: var(--button-hover-bg-color); /* Usa a cor de hover do botão do tema ativo */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3); /* Sombra ainda maior no hover */
+    transform: translateY(-3px); /* Leve efeito de elevação */
+}
+
+.action-button i {
+    margin-left: 12px; /* Aumentado a margem para o ícone */
+    font-size: 1.3em; /* Levemente maior */
+}
+
+/* Link de Mídias Sociais (Instagram) - Rodapé */
+.social-link {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px solid var(--card-border-color); /* Usa a cor da borda do card do tema ativo */
+    text-align: center;
+    transition: border-color 0.5s ease; /* Transição suave para mudança de tema */
+}
+
+.social-link .instagram-profile {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--social-text-color); /* Usa a cor do texto social do tema ativo */
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.social-link .instagram-profile:hover {
+    color: var(--social-hover-color); /* Usa a cor de hover social do tema ativo */
+}
+
+.social-link .instagram-profile i {
+    font-size: 2.5rem;
+    margin-right: 10px;
+    color: var(--social-icon-color); /* Usa a cor do ícone social do tema ativo */
+    transition: color 0.3s ease;
+}
+
+/* Estilos para h1 na página de serviços (título principal) com destaque */
+.services-list > .client-name { /* Adicionei 'client-name' para usar o estilo já definido */
+    font-size: 2.2rem;
+    margin-bottom: 15px; /* Ajusta margem com o sublinhado */
+}
+
+/* ATUALIZADO: Estilos para h2 na página de serviços (títulos dos serviços individuais) com destaque */
+.services-list .service-description h2 {
+    font-family: 'Playfair Display', serif; /* Aplica a nova fonte aos títulos de serviço */
+    font-weight: 700;
+    margin-top: 0; /* Garante que não haja margem superior extra */
+    margin-bottom: 15px; /* Ajusta margem com o sublinhado */
+    color: var(--header-text-color); /* Mantém a cor para contraste */
+    position: relative;
+    display: inline-block;
+    padding-bottom: 6px; /* Espaço para o sublinhado */
+    letter-spacing: 0.05em;
+}
+.services-list .service-description h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px; /* Comprimento do sublinhado */
+    height: 2px; /* Espessura do sublinhado */
+    background-color: var(--button-bg-color); /* Usa a cor vibrante do botão */
+    border-radius: 1px;
+}
+
+
+/* NOVO: Estilos para a animação ao scroll (aparecer/desaparecer) */
+.animate-on-scroll {
+    opacity: 0; /* Começa invisível */
+    transform: translateY(20px); /* Começa um pouco abaixo da posição final */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Transição suave de opacidade e posição */
+}
+
+.animate-on-scroll.is-visible {
+    opacity: 1; /* Fica visível */
+    transform: translateY(0); /* Sobe para a posição final */
+}
+
+/* Atrasos para animações sequenciais */
+.animate-on-scroll.delay-1 { transition-delay: 0.1s; }
+.animate-on-scroll.delay-2 { transition-delay: 0.2s; }
+.animate-on-scroll.delay-3 { transition-delay: 0.3s; }
+.animate-on-scroll.delay-4 { transition-delay: 0.4s; }
+.animate-on-scroll.delay-5 { transition-delay: 0.5s; }
+.animate-on-scroll.delay-6 { transition-delay: 0.6s; }
+.animate-on-scroll.delay-7 { transition-delay: 0.7s; }
+.animate-on-scroll.delay-8 { transition-delay: 0.8s; }
+
+
+/* --- ESTILOS ESPECÍFICOS PARA A PÁGINA DE SERVIÇOS (LAYOUT DE IMAGEM/TEXTO) --- */
+
+/* Contêiner de cada item de serviço */
+.services-list .service-item {
+    display: flex; /* Para alinhar imagem e descrição lado a lado */
+    flex-direction: column; /* Padrão em telas pequenas: empilha imagem e texto */
+    background-color: rgba(45, 45, 45, 0.7); /* Fundo levemente mais claro que o card, translúcido */
+    border-radius: 15px;
+    overflow: hidden; /* Garante que as bordas arredondadas funcionem com a imagem */
+    margin-bottom: 25px; /* Espaço entre os itens de serviço */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transição para hover */
+    border: 1px solid var(--card-border-color); /* Borda sutil */
+}
+
+.services-list .service-item:hover {
+    transform: translateY(-5px); /* Efeito de elevação sutil ao passar o mouse */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Contêiner da imagem do serviço */
+.services-list .service-image-container {
+    flex-shrink: 0; /* Impede que a imagem encolha */
+    width: 100%;
+    height: 200px; /* Altura fixa para as imagens em mobile */
+    overflow: hidden;
+}
+
+.services-list .service-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
+    display: block;
+    transition: transform 0.3s ease; /* Efeito de zoom ao passar o mouse */
+}
+
+.services-list .service-item:hover .service-image-container img {
+    transform: scale(1.05); /* Pequeno zoom na imagem ao passar o mouse */
+}
+
+/* Bloco da descrição do serviço */
+.services-list .service-description {
+    padding: 20px;
+    color: var(--main-text-color);
+}
+
+.services-list .service-description p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Ajustes Responsivos para Telas Menores (até 600px) */
+@media (max-width: 600px) {
+    .page-container {
+        padding: 30px 15px;
+    }
+
+    .site-header .profile-image {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 15px;
+    }
+
+    .site-header .client-name {
+        font-size: 2rem;
+    }
+    .site-header .client-name::after {
+        width: 50px;
+    }
+
+    .site-header .tagline {
+        font-size: 1.1rem;
+        letter-spacing: 0.04em;
+        margin-bottom: 15px;
+    }
+
+    .site-header .description-text {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .content-card {
+        padding: 25px 20px;
+    }
+
+    /* Ajuste de botões em telas menores */
+    .action-button {
+        font-size: 1rem;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+    }
+    .action-button i {
+        margin-left: 10px;
+        font-size: 1.2em;
+    }
+
+    .social-link .instagram-profile i {
+        font-size: 2.2rem;
+    }
+    .social-link .instagram-profile span {
+        font-size: 1.05rem;
+    }
+
+    /* Títulos gerais da página de serviços em telas menores */
+    .services-list > .client-name { 
+        font-size: 1.8rem;
+    }
+    .services-list > .client-name::after {
+        width: 50px;
+    }
+    /* Títulos dos serviços individuais em telas menores */
+    .services-list .service-description h2 { 
+        font-size: 1.3rem;
+    }
+    .services-list .service-description h2::after {
+        width: 30px;
+    }
+    .services-list .service-description p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Ajustes Responsivos para Telas Muito Pequenas (até 400px) */
+@media (max-width: 400px) {
+    .site-header .profile-image {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+    .site-header .client-name {
+        font-size: 1.8rem;
+    }
+    .site-header .client-name::after {
+        width: 40px;
+    }
+    .site-header .tagline {
+        font-size: 1rem;
+        letter-spacing: 0.03em;
+    }
+    .site-header .description-text {
+        font-size: 0.85rem;
+        padding: 0 5px;
+    }
+    /* Ajuste de botões em telas muito pequenas */
+    .action-button {
+        font-size: 0.9rem;
+        padding: 12px 18px;
+        margin-bottom: 12px;
+    }
+    .action-button i {
+        margin-left: 8px;
+        font-size: 1.1em;
+    }
+
+    .social-link .instagram-profile i {
+        font-size: 2rem;
+    }
+    .social-link .instagram-profile span {
+        font-size: 1rem;
+    }
+    /* Títulos gerais da página de serviços em telas muito pequenas */
+    .services-list > .client-name {
+        font-size: 1.6rem;
+    }
+    .services-list > .client-name::after {
+        width: 35px;
+    }
+    /* Títulos dos serviços individuais em telas muito pequenas */
+    .services-list .service-description h2 {
+        font-size: 1.2rem;
+    }
+    .services-list .service-description h2::after {
+        width: 25px;
+    }
+    .services-list .service-description p {
+        font-size: 0.85rem;
+    }
+    .services-list .service-image-container {
+        height: 180px; /* Altura da imagem um pouco menor em telas muito pequenas */
+    }
+}
+
+/* NOVO: Ajustes Responsivos para Telas Maiores (Desktop - a partir de 768px) */
+@media (min-width: 768px) {
+    /* Permite que o contêiner da página de serviços se expanda */
+    .wide-page-container {
+        max-width: 960px; /* Ou um valor maior como 1080px ou 1200px, dependendo de quanto você quer que expanda */
+        padding: 60px 30px; /* Mais padding para desktop */
+    }
+
+    /* Ajustes específicos para os itens de serviço dentro de um contêiner largo */
+    .wide-page-container .services-list .service-item {
+        flex-direction: row; /* Imagem e texto lado a lado */
+        align-items: stretch; /* Garante que os itens se estiquem para preencher a altura */
+        min-height: 250px; /* Altura mínima para cada item de serviço */
+    }
+
+    /* Inverte a ordem da imagem e texto para alguns itens (efeito zigue-zague) */
+    .wide-page-container .services-list .service-item:nth-child(even) { /* Itens pares */
+        flex-direction: row-reverse;
+    }
+
+    .wide-page-container .services-list .service-image-container {
+        width: 45%; /* Aumenta a largura da imagem para usar mais espaço */
+        height: auto; /* Deixa a altura se ajustar automaticamente, respeitando min-height do pai */
+    }
+
+    .wide-page-container .services-list .service-description {
+        width: 55%; /* Ajusta a largura da descrição */
+        padding: 30px; /* Mais padding */
+        display: flex; /* Para centralizar conteúdo verticalmente */
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .wide-page-container .services-list .service-description h2 {
+        font-size: 2rem; /* Título maior para desktop */
+        margin-bottom: 15px;
+    }
+    .wide-page-container .services-list .service-description h2::after {
+        width: 50px; /* Sublinhado mais longo para desktop */
+    }
+
+
+    .wide-page-container .services-list .service-description p {
+        font-size: 1.05rem; /* Texto maior para desktop */
+        line-height: 1.7;
+    }
+}
