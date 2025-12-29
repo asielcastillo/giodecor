@@ -43,18 +43,23 @@
 
     <div class="page-container">
         <header class="site-header">
-            <!-- Imagem de Perfil Circular -->
-            <img src="score/foto-perfil-insta.jpg" alt="Foto de perfil de Giovanka Fernandes Decor" class="profile-image animate-on-scroll">
+            <!-- Imagem de Perfil Circular - AGORA DENTRO DE UM WRAPPER -->
+            <div class="profile-image-wrapper animate-on-scroll">
+                <img src="score/foto-perfil-insta.jpg" alt="Foto de perfil de Giovanka Fernandes Decor" class="profile-image">
+            </div>
             
-            <h1 class="client-name animate-on-scroll delay-1">Giovanka Fernandes Decor</h1>
-            <p class="tagline animate-on-scroll delay-2">Transformando sonhos em ambientes e eventos memoráveis em Palmas e Tocantins.</p>
+            <!-- NOVO: Contêiner para o bloco de texto do cabeçalho -->
+            <div class="header-text-container">
+                <h1 class="client-name animate-on-scroll delay-1">Giovanka Fernandes Decor</h1>
+                <p class="tagline animate-on-scroll delay-2">Transformando sonhos em ambientes e eventos memoráveis em Palmas e Tocantins.</p>
 
-            <!-- Descrição da Cliente na Landing Page -->
-            <p class="description-text animate-on-scroll delay-3">
-                Com paixão e criatividade, Giovanka Fernandes é especialista em design de interiores e decoração de eventos, 
-                criando espaços que refletem a personalidade e os desejos de cada cliente. 
-                Seja para sua casa, escritório ou uma celebração especial, cada projeto é tratado com exclusividade e atenção aos detalhes.
-            </p>
+                <!-- Descrição da Cliente na Landing Page -->
+                <p class="description-text animate-on-scroll delay-3">
+                    Com paixão e criatividade, Giovanka Fernandes é especialista em design de interiores e decoração de eventos, 
+                    criando espaços que refletem a personalidade e os desejos de cada cliente. 
+                    Seja para sua casa, escritório ou uma celebração especial, cada projeto é tratado com exclusividade e atenção aos detalhes.
+                </p>
+            </div>
         </header>
 
         <main class="content-card animate-on-scroll delay-4">
